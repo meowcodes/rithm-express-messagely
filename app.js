@@ -24,6 +24,8 @@ const authRoutes = require("./routes/auth");
 // const messageRoutes = require("./routes/messages");
 
 app.use("/auth", authRoutes);
+
+
 // app.use("/users", userRoutes);
 // app.use("/messages", messageRoutes);
 

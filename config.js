@@ -4,7 +4,7 @@
 // convention for reading file named ".env" (where SECRET_KEY comes from)
 require("dotenv").config();
 
-const SECRET_KEY = process.env.SECRET_KEY;
+const SECRET_KEY = process.env.SECRET_KEY || "tacotime";
 const BCRYPT_WORK_ROUNDS = 10;
 
 
