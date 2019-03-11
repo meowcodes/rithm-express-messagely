@@ -41,7 +41,7 @@ app.use(function(req, res, next) {
 app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   console.error(err.stack);
-
+  console.log("SECOND CATCH", err)
   return res.json({
     error: err,
     message: err.message

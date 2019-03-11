@@ -2,6 +2,7 @@ const express = require("express");
 const jwt = require("jsonwebtoken")
 
 const User = require("../models/user");
+const expressError = require("../expressError")
 
 const router = new express.Router();
 
@@ -29,6 +30,7 @@ router.post("/login", async function(req, res, next) {
 
         throw new expressError("Invalid credentials", 400)
     } catch(err) {
+        console.log("FIRST CATCH", err)
         return next(err);
     }
 })
