@@ -18,7 +18,7 @@ router.post("/login", async function(req, res, next) {
     try{
         // get the username. & password
         const { username, password } = req.body;
-    
+
         // authenticate
         if(await User.authenticate(username, password)){
         // create a token
