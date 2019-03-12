@@ -120,10 +120,12 @@ class User {
     // resolve promises
     for(let msg of res.rows){
       let toRes = await msg.promise;
+      delete msg.promise;
+      delete msg.to_username;
       msg.to_user = toRes.rows[0];
     }
 
-    return {id, to_user, body, sent_at, read_at} = res.rows;
+    return res.rows
   }
 
   /** Return messages to this user.
@@ -156,10 +158,12 @@ class User {
     // resolve promises
     for(let msg of res.rows){
       let toRes = await msg.promise;
+      delete msg.promise;
+      delete msg.from_username;
       msg.from_user = toRes.rows[0];
     }
 
-    return {id, from_user, body, sent_at, read_at} = res.rows;
+    return res.rows;
   }
 }
 

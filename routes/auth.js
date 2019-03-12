@@ -1,11 +1,12 @@
 const express = require("express");
 const jwt = require("jsonwebtoken")
 
-const expressError = require("../expressError")
-const { SECRET_KEY } = require("../config")
 const router = new express.Router();
-
+const { SECRET_KEY } = require("../config");
+const expressError = require("../expressError");
 const User = require("../models/user");
+
+app.use(express.json());
 
 const OPTIONS = { expiresIn: 60 * 60 }
 
