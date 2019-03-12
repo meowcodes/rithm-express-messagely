@@ -17,14 +17,12 @@ const OPTIONS = { expiresIn: 60 * 60 }
  **/
 router.post("/login", async function(req, res, next) {
     try{
-        // get the username. & password
         const { username, password } = req.body;
 
         // authenticate
         if(await User.authenticate(username, password)){
-        // create a token
-            const token = jwt.sign({ username }, SECRET_KEY, OPTIONS);
-            // send token
+            // create and send token
+            const token = jwt.sign({ username }, SECRET_KEY, OPTIONS); 
             return res.json({ token });
         }       
 
