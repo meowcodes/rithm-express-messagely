@@ -35,7 +35,7 @@ class User {
         WHERE username = $1`,
       [username]
     );
-
+    
     // get hashed password
     const hashedPW = result.rows[0].password;
 

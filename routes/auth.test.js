@@ -26,7 +26,7 @@ describe("POST /login success", function () {
       last_name: "testlname",
       phone: "5556661234"
     })
-    // console.log(user)
+
     // Save all info into global auth 
     auth.user = user
   });
@@ -50,22 +50,19 @@ describe("POST /login success", function () {
         username: auth.user.username,
         password: "wrong"
       });
-    console.log("HERE",response.body)
     expect(response.statusCode).toBe(400);
-    expect(response.body.error).toEqual({
-      message: "Invalid credentials", status: 400
-    });
+    expect(response.body.message).toEqual("Invalid credentials");
   });
 
-  // test("returns 404 for missing inputs", async function () {
-  //   const response = await request(app)
-  //     .get(`/auth/login`)
-  //     .send({ _token: "garbage" }); // invalid token!
-  //   expect(response.statusCode).toBe(401);
-  //   expect(response.body.error).toEqual({
-  //     message: "Unauthorized", status: 401
-  //   });
-  // });
+  test("returns 404 for missing inputs", async function () {
+    const response = await request(app)
+      .post(`/auth/login`)
+      .send({
+        password: "wrong"
+      });
+    expect(response.statusCode).toBe(400);
+    expect(response.body.message).toEqual("Invalid inputs");
+  });
 
   afterAll(async function () {
     await db.query(`

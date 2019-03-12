@@ -26,11 +26,13 @@ router.post("/login", async function(req, res, next) {
             const token = jwt.sign({ username }, SECRET_KEY, OPTIONS);
             // send token
             return res.json({ token });
-        }
+        }       
 
         throw new expressError("Invalid credentials", 400)
     } catch(err) {
-        console.log("FIRST CATCH", err)
+        if(!(err instanceof expressError)){
+            err = new expressError("Invalid inputs", 400)
+        }
         return next(err);
     }
 })
