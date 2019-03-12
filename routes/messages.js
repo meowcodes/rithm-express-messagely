@@ -3,7 +3,7 @@ const app = express();
 const router = new express.Router();
 
 const Message = require("../models/message");
-const { authenticateJWT, ensureLoggedIn, ensureCorrectUser } = require("../middleware/auth");
+const { authenticateJWT, ensureLoggedIn } = require("../middleware/auth");
 
 app.use(express.json());
 app.use(authenticateJWT);
@@ -25,9 +25,9 @@ router.get('/:id',
     async function(req, res, next) {
         try{
             // get to/from usernames
-            
+
             // chek if curr user is one of them
-            return await Message.get(id);
+            return res.send(await Message.get(id));
         } catch(err) {
             return next(err);
         }
@@ -41,17 +41,18 @@ router.get('/:id',
  *   {message: {id, from_username, to_username, body, sent_at}}
  *
  **/
-router.post('/:id',
+router.post('/',
     ensureLoggedIn,
     async function(req, res, next) {
         try{
             const { to_username, body } = req.body;
             const from_username = req.user.username
-            return await Message.create({
+            const resp = await Message.create({
                 from_username, 
                 to_username, 
                 body
             });
+            return res.send(resp);
         } catch(err) {
             return next(err);
         }
@@ -65,12 +66,13 @@ router.post('/:id',
  * Make sure that the only the intended recipient can mark as read.
  *
  **/
-router.post('/:id',
+router.post('/:id/read',
     ensureLoggedIn,
-    ensureCorrectUser,
+    // username === to_user
+
     async function(req, res, next) {
         try{
-            return await Message.markRead(req.params.id);
+            return res.send(await Message.markRead(req.params.id));
         } catch(err) {
             return next(err);
         }

@@ -17,7 +17,7 @@ router.get('/',
     ensureLoggedIn,
     async function(req, res, next) {
         try{
-            return await User.all();
+            return res.send(await User.all());
         } catch(err) {
             return next(err);
         }
@@ -35,7 +35,7 @@ router.get('/:username',
     ensureCorrectUser,
     async function(req, res, next) {
         try{
-            return await User.get(req.params.username);
+            return res.send(await User.get(req.params.username));
         } catch(err) {
             return next(err);
         }
@@ -56,7 +56,7 @@ router.get('/:username/to',
     ensureCorrectUser,
     async function(req, res, next) {
         try{
-            return await User.messagesTo(req.params.username);
+            return res.send(await User.messagesTo(req.params.username));
         } catch(err) {
             return next(err);
         }
@@ -77,7 +77,7 @@ router.get('/:username/from',
     ensureCorrectUser,
     async function(req, res, next) {
         try{
-            return await User.messagesFrom(req.params.username);
+            return res.send(await User.messagesFrom(req.params.username));
         } catch(err) {
             return next(err);
         }

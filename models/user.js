@@ -52,7 +52,7 @@ class User {
       UPDATE users 
         SET last_login_at=current_timestamp
         WHERE username=$1
-        RETURNING join_at`,
+        RETURNING last_login_at`,
       [username]
     );
   }
@@ -145,7 +145,7 @@ class User {
       [username]
     );
     
-    // get to_user info promises
+    // get from_user info promises
     for(let msg of res.rows){
       msg.promise = db.query(`
         SELECT username, first_name, last_name, phone
