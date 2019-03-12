@@ -25,8 +25,8 @@ describe("POST /login success", function () {
       first_name: "testfname",
       last_name: "testlname",
       phone: "5556661234"
-    })
-n
+    });
+
     // Save all info into global auth 
     auth.user = user
   });

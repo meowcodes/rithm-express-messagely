@@ -94,7 +94,18 @@ class Message {
       read_at: m.read_at,
     };
   }
+
+  // static async getToFromUsers(id) {
+  //   const result = await db.query(`
+  //     SELECT to_username, from_username
+  //     FROM messages
+  //     WHERE id = $1
+  //   `, [id]);
+
+
+  // }
 }
+
 
 
 module.exports = Message;

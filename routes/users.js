@@ -17,9 +17,10 @@ router.get('/',
     ensureLoggedIn,
     async function(req, res, next) {
         try{
+            console.log("We made it inside the try!!!")
             return res.send(await User.all());
         } catch(err) {
-            return next(err);
+            return next(err);[]
         }
     }
 );

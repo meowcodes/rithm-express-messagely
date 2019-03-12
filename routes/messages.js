@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const router = new express.Router();
+const expressError = require("../expressError");
 
 const Message = require("../models/message");
 const { authenticateJWT, ensureLoggedIn } = require("../middleware/auth");
@@ -24,10 +25,14 @@ router.get('/:id',
     ensureLoggedIn,
     async function(req, res, next) {
         try{
-            // get to/from usernames
+            const currUser = req.user.username;
+            const message = await Message.get(req.params.id);
 
-            // chek if curr user is one of them
-            return res.send(await Message.get(id));
+            if (currUser === message.from_user.username || currUser === message.to_user.username) {
+                return res.send(message);
+            } else {
+                throw new expressError("Unauthorized", 401);
+            }
         } catch(err) {
             return next(err);
         }
@@ -68,13 +73,22 @@ router.post('/',
  **/
 router.post('/:id/read',
     ensureLoggedIn,
-    // username === to_user
-
     async function(req, res, next) {
         try{
-            return res.send(await Message.markRead(req.params.id));
+            // TODO: username === to_user
+            
+            const currUser = req.user.username;
+            const message = await Message.get(req.params.id);
+
+            if(currUser === message.to_user.username) {
+                return res.send(await Message.markRead(req.params.id));
+            } else {
+                throw new expressError("Unauthorized", 401);
+            }
         } catch(err) {
             return next(err);
         }
     }
 );
+
+module.exports = router;
